@@ -1,0 +1,20 @@
+
+
+Customer Management:
+
+    - Implement basic customer management commands for the employer to add or update customer details as needed.
+
+Inventory management:
+    - Allow the employer to view, add, edit, and delete books from inventory through simple commands.
+    - Store book details in a structured format within a file or database, accessible only to the employer.
+
+Sales Management:
+
+    - Enable the employer to record sales transactions by entering book details and quantities sold and to which user.
+    - Calculate totals and generate basic sales reports directly within the command-line interface.
+    - Create a straightforward POS command for the employer to process sales quickly by entering book details and quantities (basically adding multiple books at the)
+
+Search and Filtering:
+    - Provide search functionality for the employer to find books by id, title or author within the command-line interface.
+    - Provide search functionality for the employer to find users by name or address within the command-line interface.
+    - 
