@@ -440,7 +440,7 @@ public:
         newUser.displayDetailed();
     }
 
-    // Delete user
+    //TODO (use the get user by id) Delete user
     void deleteUser() {
 
         cout << "---------------------------------\n";
@@ -490,6 +490,9 @@ public:
 
         // Loop while not chosen to stop updating
         while(true) {
+            
+            // Flush out the input buffer
+            cin.ignore(numeric_limits<streamsize>::max(), '\n' ); 
 
             string choice;
 
@@ -514,17 +517,12 @@ public:
             } else {
                 cout << "Invalid choice!" << endl;
             }
-
         }
 
-        for (int i = 0; i < this->users.size(); i++)
-        {
-            if (this->users[i].getId() == user.getId())
-            {
-                this->users[i] = user;
-                break;
-            }
-        }
+        user.setAddress(address);
+        user.setAge(age);
+        user.setEmail(email);
+        user.setName(name);
     }
 
     //  Get book (by id)
