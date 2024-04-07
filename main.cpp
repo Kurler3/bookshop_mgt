@@ -5,6 +5,254 @@
 
 using namespace std;
 
+// Book class
+class Book
+{
+private:
+    int id;
+    string title;
+    string author;
+
+public:
+    Book(int id, string title, string author)
+    {
+        this->id = id;
+        this->title = title;
+        this->author = author;
+    }
+
+    /////////////////////////////////////////////
+    // GETTERS //////////////////////////////////
+    /////////////////////////////////////////////
+
+    int getId()
+    {
+        return this->id;
+    }
+
+    string getTitle()
+    {
+        return this->title;
+    }
+
+    string getAuthor()
+    {
+        return this->author;
+    }
+
+    /////////////////////////////////////////////
+    // SETTERS //////////////////////////////////
+    /////////////////////////////////////////////
+
+    void setTitle()
+    {
+        this->title = title;
+    }
+
+    void setAuthor()
+    {
+        this->author = author;
+    }
+
+    ////////////////////////////////////////////
+    // METHODS /////////////////////////////////
+    ////////////////////////////////////////////
+
+    void displayInLine() {
+        cout << this->id << " | " << this->title << " | " << this->author << endl;
+    }
+
+    void displayDetailed()
+    {
+
+        cout << "---------------------------------\n";
+        cout << "ID: " << this->id << "\n";
+        cout << "Title: " << this->title << "\n";
+        cout << "Author: " << this->author << "\n";
+        cout << "---------------------------------" << endl;
+    }
+};
+
+// User class
+class User
+{
+
+private:
+    int id;
+    string name;
+    string address;
+    string email;
+    int age;
+
+public:
+    User(int id, string name, string address, string email, int age)
+    {
+        this->id = id;
+        this->name = name;
+        this->address = address;
+        this->email = email;
+        this->age = age;
+    }
+
+    /////////////////////////////////////////////
+    // GETTERS //////////////////////////////////
+    /////////////////////////////////////////////
+
+    int getId()
+    {
+        return this->id;
+    }
+
+    string getName()
+    {
+        return this->name;
+    }
+
+    string getAddress()
+    {
+        return this->address;
+    }
+
+    string getEmail()
+    {
+        return this->email;
+    }
+
+    int getAge()
+    {
+        return this->age;
+    }
+
+    /////////////////////////////////////////////
+    // SETTERS //////////////////////////////////
+    /////////////////////////////////////////////
+
+    void setName(string name)
+    {
+        this->name = name;
+    }
+
+    void setAddress(string address)
+    {
+        this->address = address;
+    }
+    void setEmail(string email)
+    {
+        this->email = email;
+    }
+
+    void setAge(int age)
+    {
+        this->age = age;
+    }
+
+    ////////////////////////////////////////////
+    // METHODS /////////////////////////////////
+    ////////////////////////////////////////////
+
+    void displayInLine() {
+        cout << this->id << " | " << this->name << " | " << this->email << endl;
+    }
+
+    void displayDetailed()
+    {
+
+        cout << "---------------------------------\n";
+        cout << "ID: " << this->id << "\n";
+        cout << "Name: " << this->name << "\n";
+        cout << "Email: " << this->email << "\n";
+        cout << "Age: " << this->age << "\n";
+        cout << "Address: " << this->address << "\n";
+        cout << "---------------------------------" << endl;
+    }
+};
+
+// Sales class
+class Sale
+{
+private:
+    int id;
+    int bookId;
+    string bookTitle;
+    int quantity;
+    double total;
+    double pricePerBook;
+    time_t saleDate;
+
+public:
+    Sale(int id, int bookId, string bookTitle, int quantity, double pricePerBook)
+    {
+        this->id = id;
+        this->bookId = bookId;
+        this->bookTitle = bookTitle;
+        this->quantity = quantity;
+        this->total = pricePerBook * quantity;
+        this->pricePerBook = pricePerBook;
+        this->saleDate = time(nullptr);
+    }
+
+    /////////////////////////////////////////////
+    // GETTERS //////////////////////////////////
+    /////////////////////////////////////////////
+
+    int getId()
+    {
+        return this->id;
+    }
+
+    int getBookId()
+    {
+        return this->bookId;
+    }
+
+    string getBookTitle()
+    {
+        return this->bookTitle;
+    }
+
+    int getQuantity()
+    {
+        return this->quantity;
+    }
+
+    double getTotal()
+    {
+        return this->total;
+    }
+
+    double getPricePerBook()
+    {
+        return this->pricePerBook;
+    }
+
+    time_t getSaleDate()
+    {
+        return this->saleDate;
+    }
+
+    ////////////////////////////////////////////
+    // METHODS /////////////////////////////////
+    ////////////////////////////////////////////
+
+    void displayInLine() {
+        cout << this->id << " | " << this->bookTitle << " | " << this->quantity << " | " << this->total << " | " << this->saleDate << endl;
+    }
+
+    void displayDetailed()
+    {
+
+        cout << "---------------------------------\n";
+        cout << "ID: " << this->id << "\n";
+        cout << "Book Title: " << this->bookTitle << "\n";
+        cout << "Quantity: " << this->quantity << "\n";
+        cout << "Price Per Book: " << this->pricePerBook << "\n";
+        cout << "Total: " << this->total << "\n";
+        cout << "Sale Date: " << this->saleDate << "\n";
+        cout << "---------------------------------" << endl;
+    }
+};
+
+
 // Global management class
 class Management
 {
@@ -40,29 +288,40 @@ public:
     // GETTERS ///////////////////////////////////////
     //////////////////////////////////////////////////
 
-    void getBooks()
-    {   
-        cout << "Books: id, title, author" << endl;
+    void displayAllBooks()
+    {       
+        cout << "---------------------------------\n";
+        cout << "Books: id, title, author\n";
         for(int i = 0; i < this->books.size(); i++)
         {
             this->books[i].displayInLine();
         }
+        cout << "---------------------------------" << endl;
     }
 
-    void getUsers()
+    void displayAllUsers()
     {   
-        cout << "Users: id, name, email" << endl;
+        cout << "---------------------------------\n";
+        cout << "Users: id, name, email\n";
 
         for(int i = 0; i < this->users.size(); i++)
         {
             this->users[i].displayInLine();
         }
-        
+        cout << "---------------------------------" << endl;
+
     }
 
-    vector<Sale> getSales()
-    {
-        return this->sales;
+    void displayAllSales()
+    {       
+        cout << "---------------------------------\n";
+        cout << "Sales: id, book title, quantity, total, date\n";
+
+        for(int i = 0; i < this->sales.size(); i++)
+        {
+            this->sales[i].displayInLine();
+        }
+        cout << "---------------------------------" << endl;
     }
 
     //////////////////////////////////////////////////
@@ -200,7 +459,7 @@ public:
         {
             if (this->sales[i].getBookTitle() == bookTitle)
             {
-                this->books[i].displayInLine();
+                this->sales[i].displayInLine();
                 count++;
             }
         }
@@ -216,253 +475,14 @@ public:
     }
 };
 
-// Book class
-class Book
-{
-private:
-    int id;
-    string title;
-    string author;
-
-public:
-    Book(int id, string title, string author)
-    {
-        this->id = id;
-        this->title = title;
-        this->author = author;
-    }
-
-    /////////////////////////////////////////////
-    // GETTERS //////////////////////////////////
-    /////////////////////////////////////////////
-
-    int getId()
-    {
-        return this->id;
-    }
-
-    string getTitle()
-    {
-        return this->title;
-    }
-
-    string getAuthor()
-    {
-        return this->author;
-    }
-
-    /////////////////////////////////////////////
-    // SETTERS //////////////////////////////////
-    /////////////////////////////////////////////
-
-    void setTitle()
-    {
-        this->title = title;
-    }
-
-    void setAuthor()
-    {
-        this->author = author;
-    }
-
-    ////////////////////////////////////////////
-    // METHODS /////////////////////////////////
-    ////////////////////////////////////////////
-
-    void displayInLine() {
-        cout << this->id << "  - " << this->title << " - " << this->author << endl;
-    }
-
-    void displayDetailed()
-    {
-
-        cout << "---------------------------------\n";
-        cout << "ID: " << this->id << "\n";
-        cout << "Title: " << this->title << "\n";
-        cout << "Author: " << this->author << "\n";
-        cout << "---------------------------------" << endl;
-    }
-};
-
-// User class
-class User
-{
-
-private:
-    int id;
-    string name;
-    string address;
-    string email;
-    int age;
-
-public:
-    User(int id, string name, string address, string email, int age)
-    {
-        this->id = id;
-        this->name = name;
-        this->address = address;
-        this->email = email;
-        this->age = age;
-    }
-
-    /////////////////////////////////////////////
-    // GETTERS //////////////////////////////////
-    /////////////////////////////////////////////
-
-    int getId()
-    {
-        return this->id;
-    }
-
-    string getName()
-    {
-        return this->name;
-    }
-
-    string getAddress()
-    {
-        return this->address;
-    }
-
-    string getEmail()
-    {
-        return this->email;
-    }
-
-    int getAge()
-    {
-        return this->age;
-    }
-
-    /////////////////////////////////////////////
-    // SETTERS //////////////////////////////////
-    /////////////////////////////////////////////
-
-    void setName(string name)
-    {
-        this->name = name;
-    }
-
-    void setAddress(string address)
-    {
-        this->address = address;
-    }
-    void setEmail(string email)
-    {
-        this->email = email;
-    }
-
-    void setAge(int age)
-    {
-        this->age = age;
-    }
-
-    ////////////////////////////////////////////
-    // METHODS /////////////////////////////////
-    ////////////////////////////////////////////
-
-    void displayInLine() {
-        cout << this->id << "  - " << this->name << " - " << this->email << endl;
-    }
-
-    void displayDetailed()
-    {
-
-        cout << "---------------------------------\n";
-        cout << "ID: " << this->id << "\n";
-        cout << "Name: " << this->name << "\n";
-        cout << "Email: " << this->email << "\n";
-        cout << "Age: " << this->age << "\n";
-        cout << "Address: " << this->address << "\n";
-        cout << "---------------------------------" << endl;
-    }
-};
-
-// Sales class
-class Sale
-{
-private:
-    int id;
-    int bookId;
-    string bookTitle;
-    int quantity;
-    double total;
-    double pricePerBook;
-    time_t saleDate;
-
-public:
-    Sale(int id, int bookId, string bookTitle, int quantity, double pricePerBook)
-    {
-        this->id = id;
-        this->bookId = bookId;
-        this->bookTitle = bookTitle;
-        this->quantity = quantity;
-        this->total = pricePerBook * quantity;
-        this->pricePerBook = pricePerBook;
-        this->saleDate = time(nullptr);
-    }
-
-    /////////////////////////////////////////////
-    // GETTERS //////////////////////////////////
-    /////////////////////////////////////////////
-
-    int getId()
-    {
-        return this->id;
-    }
-
-    int getBookId()
-    {
-        return this->bookId;
-    }
-
-    string getBookTitle()
-    {
-        return this->bookTitle;
-    }
-
-    int getQuantity()
-    {
-        return this->quantity;
-    }
-
-    double getTotal()
-    {
-        return this->total;
-    }
-
-    double getPricePerBook()
-    {
-        return this->pricePerBook;
-    }
-
-    time_t getSaleDate()
-    {
-        return this->saleDate;
-    }
-
-    ////////////////////////////////////////////
-    // METHODS /////////////////////////////////
-    ////////////////////////////////////////////
-
-    void displayDetailed()
-    {
-
-        cout << "---------------------------------\n";
-        cout << "ID: " << this->id << "\n";
-        cout << "Book Title: " << this->bookTitle << "\n";
-        cout << "Quantity: " << this->quantity << "\n";
-        cout << "Price Per Book: " << this->pricePerBook << "\n";
-        cout << "Total: " << this->total << "\n";
-        cout << "Sale Date: " << this->saleDate << "\n";
-        cout << "---------------------------------" << endl;
-    }
-};
 
 int main()
 {
 
     // Init management
+    Management management = Management();
+
+    management.displayAllBooks();
 
     // Call the main menu method
 
