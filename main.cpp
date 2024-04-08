@@ -13,13 +13,15 @@ private:
     int id;
     string title;
     string author;
+    double pricePerBook;
 
 public:
-    Book(int id, string title, string author)
+    Book(int id, string title, string author, double pricePerBook)
     {
         this->id = id;
         this->title = title;
         this->author = author;
+        this->pricePerBook = pricePerBook;
     }
 
     /////////////////////////////////////////////
@@ -41,16 +43,26 @@ public:
         return this->author;
     }
 
+    double getPricePerBook()
+    {
+        return this->pricePerBook;
+    }
+
     /////////////////////////////////////////////
     // SETTERS //////////////////////////////////
     /////////////////////////////////////////////
 
-    void setTitle()
+    void setPricePerBook(double pricePerBook)
+    {
+        this->pricePerBook = pricePerBook;
+    }
+
+    void setTitle(string title)
     {
         this->title = title;
     }
 
-    void setAuthor()
+    void setAuthor(string author)
     {
         this->author = author;
     }
@@ -71,6 +83,7 @@ public:
         cout << "ID: " << this->id << "\n";
         cout << "Title: " << this->title << "\n";
         cout << "Author: " << this->author << "\n";
+        cout << "Price Per Book: " << this->pricePerBook << "\n";
         cout << "---------------------------------" << endl;
     }
 };
@@ -272,15 +285,15 @@ public:
     Management()
     {
         // Initialize books
-        this->books.push_back(Book(1, "The Great Gatsby", "F. Scott Fitzgerald"));
-        this->books.push_back(Book(2, "To Kill a Mockingbird", "Harper Lee"));
-        this->books.push_back(Book(3, "Pride and Prejudice", "Jane Austen"));
-        this->books.push_back(Book(4, "The Catcher in the Rye", "J.D. Salinger"));
-        this->books.push_back(Book(5, "The Lord of the Rings", "J.R.R. Tolkien"));
-        this->books.push_back(Book(6, "The Hobbit", "J.R.R. Tolkien"));
-        this->books.push_back(Book(7, "The Da Vinci Code", "Dan Brown"));
-        this->books.push_back(Book(8, "The Hobbit", "J.R.R. Tolkien"));
-        this->books.push_back(Book(9, "The Da Vinci Code", "Dan Brown"));
+        this->books.push_back(Book(1, "The Great Gatsby", "F. Scott Fitzgerald", 10.00));
+        this->books.push_back(Book(2, "To Kill a Mockingbird", "Harper Lee", 10.00));
+        this->books.push_back(Book(3, "Pride and Prejudice", "Jane Austen", 10.00));
+        this->books.push_back(Book(4, "The Catcher in the Rye", "J.D. Salinger", 10.00));
+        this->books.push_back(Book(5, "The Lord of the Rings", "J.R.R. Tolkien", 10.00));
+        this->books.push_back(Book(6, "The Hobbit", "J.R.R. Tolkien", 10.00));
+        this->books.push_back(Book(7, "The Da Vinci Code", "Dan Brown", 10.00));
+        this->books.push_back(Book(8, "The Hobbit", "J.R.R. Tolkien", 10.00));
+        this->books.push_back(Book(9, "The Da Vinci Code", "Dan Brown", 10.00));
 
         // Init some users
         this->users.push_back(User(1, "John Doe", "123 Main St", "john@example.com", 30));
@@ -372,7 +385,8 @@ public:
     }
 
     // Get user (by id)
-    int getUserById() {
+    int getUserById()
+    {
         cout << "---------------------------------\n";
 
         int id;
@@ -383,8 +397,10 @@ public:
 
         cout << "\n";
 
-        for(int i = 0; i > this->users.size(); i++) {
-            if(this->users[i].getId() == id) {
+        for (int i = 0; i < this->users.size(); i++)
+        {
+            if (this->users[i].getId() == id)
+            {
                 this->users[i].displayDetailed();
                 return i;
             }
@@ -406,7 +422,7 @@ public:
         cout << "Create a new user: \n";
 
         // Flush out the input buffer
-        cin.ignore(numeric_limits<streamsize>::max(), '\n' ); 
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         // Ask for name
         cout << "Enter name: ";
@@ -440,29 +456,18 @@ public:
         newUser.displayDetailed();
     }
 
-    //TODO (use the get user by id) Delete user
-    void deleteUser() {
+    // Delete user
+    void deleteUser()
+    {
 
-        cout << "---------------------------------\n";
+        int idx = getUserById();
 
-        int id;
-
-        cout << "Enter user ID: ";
-
-        cin >> id;
-
-        cout << "\n";
-
-        for (int i = 0; i < this->users.size(); i++)
+        if (idx == -1)
         {
-            if (this->users[i].getId() == id)
-            {
-                this->users.erase(this->users.begin() + i);
-                return;
-            }
+            return;
         }
 
-        cout << "User not found!" << endl;
+        this->users.erase(this->users.begin() + idx);
     }
 
     // Update user
@@ -471,7 +476,8 @@ public:
 
         int userIdx = this->getUserById();
 
-        if(userIdx == -1) {
+        if (userIdx == -1)
+        {
             return;
         }
 
@@ -482,51 +488,69 @@ public:
         // Age
         int age = user.getAge();
 
-        // Email    
+        // Email
         string email = user.getEmail();
 
         // Address
         string address = user.getAddress();
 
         // Loop while not chosen to stop updating
-        while(true) {
-            
+        while (true)
+        {
+
             // Flush out the input buffer
-            cin.ignore(numeric_limits<streamsize>::max(), '\n' ); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 
             string choice;
 
-            cout << "What would you like to update? (name, age, email, address) (exit to finish inputting data)";
+            cout << "What would you like to update? (name, age, email, address) (exit to finish inputting data) ";
 
             cin >> choice;
 
-            if(choice == "exit") {
+            if (choice == "exit")
+            {
                 break;
-            } else if(choice == "name") {
+            }
+            else if (choice == "name")
+            {
                 cout << "Enter new name: ";
-                cin >> name;
-            } else if(choice == "age") {
+                getline(cin, name);
+            }
+            else if (choice == "age")
+            {
                 cout << "Enter new age: ";
                 cin >> age;
-            } else if(choice == "email") {
+            }
+            else if (choice == "email")
+            {
                 cout << "Enter new email: ";
                 cin >> email;
-            } else if(choice == "address") {
+            }
+            else if (choice == "address")
+            {
                 cout << "Enter new address: ";
-                cin >> address;
-            } else {
+                getline(cin, address);
+            }
+            else
+            {
                 cout << "Invalid choice!" << endl;
             }
         }
 
-        user.setAddress(address);
-        user.setAge(age);
-        user.setEmail(email);
-        user.setName(name);
+        this->users[userIdx].setAddress(address);
+        this->users[userIdx].setAge(age);
+        this->users[userIdx].setEmail(email);
+        this->users[userIdx].setName(name);
+
+        cout << "User updated!" << endl;
+
+        this->users[userIdx].displayDetailed();
     }
 
     //  Get book (by id)
-    void getBookById() {
+    int getBookById()
+    {
         cout << "---------------------------------\n";
 
         int id;
@@ -537,49 +561,139 @@ public:
 
         cout << "\n";
 
-        for(int i = 0; i > this->books.size(); i++) {
-            if(this->books[i].getId() == id) {
+        for (int i = 0; i < this->books.size(); i++)
+        {
+            if (this->books[i].getId() == id)
+            {
                 this->books[i].displayDetailed();
-                return;
+
+                return i;
             }
         }
         cout << "Book not found!" << endl;
+        return -1;
     }
 
-    //TODO Add book
-    void addBook(Book book)
+    // Add book
+    void addBook()
     {
+
+        int id = this->getLastBookId() + 1;
+        string title;
+        string author;
+        double pricePerBook;
+
+        cout << "---------------------------------\n";
+        cout << "Create a new book: \n";
+
+        // Flush out the input buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        // Ask for name
+        cout << "Enter title: ";
+        getline(cin, title);
+
+        // Ask for address
+        cout << "Enter author: ";
+        getline(cin, author);
+
+        cout << "Enter price per book: ";
+        cin >> pricePerBook;
+
+        Book book = Book(
+            id,
+            title,
+            author,
+            pricePerBook);
+
+        this->setLastBookId(id);
+
         this->books.push_back(book);
+
+        // Book successfully added!
+        cout << "Book successfully added!" << endl;
+        book.displayDetailed();
     }
 
-    //TODO Delete book
-    void deleteBook(int bookId)
+    // Delete book
+    void deleteBook()
     {
-        for (int i = 0; i < this->books.size(); i++)
+        int idx = getBookById();
+
+        if (idx == -1)
         {
-            if (this->books[i].getId() == bookId)
-            {
-                this->books.erase(this->books.begin() + i);
-                break;
-            }
+            return;
         }
+
+        this->books.erase(this->books.begin() + idx);
     }
 
-    //TODO Update book
-    void updateBook(Book book)
+    // Update book
+    void updateBook()
     {
-        for (int i = 0; i < this->books.size(); i++)
+        int bookIdx = this->getBookById();
+
+        if (bookIdx == -1)
         {
-            if (this->books[i].getId() == book.getId())
+            return;
+        }
+
+        Book book = this->books[bookIdx];
+
+        // Title
+        string title = book.getTitle();
+        // Author
+        string author = book.getAuthor();
+
+        double pricePerBook = book.getPricePerBook();
+
+        // Loop while not chosen to stop updating
+        while (true)
+        {
+
+            // Flush out the input buffer
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            string choice;
+
+            cout << "What would you like to update? (title, author, pricePerBook) (exit to finish inputting data)";
+
+            cin >> choice;
+
+            if (choice == "exit")
             {
-                this->books[i] = book;
                 break;
             }
+            else if (choice == "title")
+            {
+                cout << "Enter new title: ";
+                cin >> title;
+                getline(cin, title);
+            }
+            else if (choice == "author")
+            {
+                cout << "Enter new author: ";
+                getline(cin, author);
+            }
+            else if (choice == "pricePerBook")
+            {
+                cout << "Enter new price per book: ";
+                cin >> pricePerBook;
+            }
+            else
+            {
+                cout << "Invalid choice!" << endl;
+            }
         }
+
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setPricePerBook(pricePerBook);
     }
 
     // Get sale (by id)
-    void getSaleById() {
+    void getSaleById()
+    {
         cout << "---------------------------------\n";
 
         int id;
@@ -590,8 +704,10 @@ public:
 
         cout << "\n";
 
-        for(int i = 0; i > this->sales.size(); i++) {
-            if(this->sales[i].getId() == id) {
+        for (int i = 0; i < this->sales.size(); i++)
+        {
+            if (this->sales[i].getId() == id)
+            {
                 this->sales[i].displayDetailed();
                 return;
             }
@@ -599,16 +715,63 @@ public:
         cout << "Sale not found!" << endl;
     }
 
-
-    //TODO Add sale
-    void addSale(Sale sale)
+    // Add sale
+    void addSale()
     {
+        int id = this->getLastSaleId() + 1;
+
+        cout << "---------------------------------\n";
+        cout << "Create a new book: \n";
+
+        int bookIdx = this->getBookById();
+
+        if (bookIdx == -1)
+        {
+            return;
+        }
+
+        int bookId = this->books[bookIdx].getId();
+        string bookTitle = this->books[bookIdx].getTitle();
+        double pricePerBook = this->books[bookIdx].getPricePerBook();
+
+        // Flush out the input buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        // Get the quantity
+        int quantity;
+        cout << "How many books?";
+        cin >> quantity;
+
+        // Calculate total
+        double total = quantity * pricePerBook;
+
+        Sale sale = Sale(
+            id,
+            bookId,
+            bookTitle,
+            quantity,
+            pricePerBook);
+
+        this->setLastSaleId(id);
+
         this->sales.push_back(sale);
+
+        // Sale successfully added!
+        cout << "Sale successfully added!" << endl;
+        sale.displayDetailed();
     }
 
     // Search users
-    void searchUsers(string name)
+    void searchUsers()
     {
+
+        // Flush out the input buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        string name;
+        cout << "Enter a name to search for: ";
+        getline(cin, name);
+
         int count = 0;
         for (int i = 0; i < this->users.size(); i++)
         {
@@ -623,8 +786,16 @@ public:
     }
 
     // Search books
-    void searchBooksByTitle(string title)
+    void searchBooksByTitle()
     {
+
+        // Flush out the input buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        string title;
+        cout << "Enter a title to search for: ";
+        getline(cin, title);
+
         int count = 0;
         for (int i = 0; i < this->books.size(); i++)
         {
@@ -637,8 +808,15 @@ public:
         cout << "Total books found: " << count << endl;
     }
 
-    void searchBooksByAuthor(string author)
+    void searchBooksByAuthor()
     {
+
+        // Flush out the input buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        string author;
+        cout << "Enter an author to search for: ";
+        getline(cin, author);
 
         int count = 0;
         for (int i = 0; i < this->books.size(); i++)
@@ -653,13 +831,20 @@ public:
     }
 
     //  Search sales
-    void searchSalesByBook(
-        string bookTitle)
+    void searchSalesByBook()
     {
+
+        // Flush out the input buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        string title;
+        cout << "Enter a title to search for: ";
+        getline(cin, title);
+
         int count = 0;
         for (int i = 0; i < this->books.size(); i++)
         {
-            if (this->sales[i].getBookTitle() == bookTitle)
+            if (this->sales[i].getBookTitle() == title)
             {
                 this->sales[i].displayInLine();
                 count++;
@@ -668,13 +853,7 @@ public:
         cout << "Total sales found: " << count << endl;
     }
 
-    // TODO
-    void searchSalesByDate(
-        string date)
-    {
-    }
-
-    // TODO Display main menu
+    //  Display main menu
     void displayMainMenu()
     {
         while (true)
@@ -688,16 +867,16 @@ public:
             cout << "5. Add a new user\n";
             cout << "6. Delete a user\n";
             cout << "7. Update a user\n";
-            cout << "8. Get book by id";
+            cout << "8. Get book by id\n";
             cout << "9. Add a new book\n";
             cout << "10. Delete a book\n";
             cout << "11. Update a book\n";
-            cout << "12. Get sale by id";
+            cout << "12. Get sale by id\n";
             cout << "13. Add a new sale\n";
             cout << "14. Search for users\n";
             cout << "15. Search for books\n";
             cout << "16. Search for sales\n";
-            cout << "17. Exit\n";
+            cout << "17. Exit" << endl;
 
             // Get user input
             int choice;
@@ -731,27 +910,43 @@ public:
                 break;
             case 6:
                 // Delete a user
-
+                this->deleteUser();
                 break;
             case 7:
+                this->updateUser();
                 break;
-
             case 8:
+                this->getBookById();
                 break;
             case 9:
+                this->addBook();
                 break;
             case 10:
+                this->deleteBook();
                 break;
             case 11:
+                this->updateBook();
                 break;
             case 12:
+                this->getSaleById();
                 break;
             case 13:
+                this->addSale();
+                break;
+            case 14:
+                this->searchUsers();
+                break;
+            case 15:
+                this->searchBooksByTitle();
+                break;
+            case 16:
+                this->searchSalesByBook();
                 break;
             case 17:
                 cout << "Thank you for your visit!\n";
                 exit(0);
             }
+
         }
     }
 };
