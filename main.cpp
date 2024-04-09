@@ -485,6 +485,7 @@ public:
 
         // Name
         string name = user.getName();
+
         // Age
         int age = user.getAge();
 
@@ -498,14 +499,8 @@ public:
         while (true)
         {
 
-            // Flush out the input buffer
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-
             string choice;
-
             cout << "What would you like to update? (name, age, email, address) (exit to finish inputting data) ";
-
             cin >> choice;
 
             if (choice == "exit")
@@ -515,22 +510,32 @@ public:
             else if (choice == "name")
             {
                 cout << "Enter new name: ";
-                getline(cin, name);
+                string newName;
+                cin.ignore();
+                getline(cin, newName);
+                user.setName(newName);
             }
             else if (choice == "age")
             {
                 cout << "Enter new age: ";
-                cin >> age;
+                int newAge;
+                cin >> newAge;
+                user.setAge(newAge);
             }
             else if (choice == "email")
             {
                 cout << "Enter new email: ";
-                cin >> email;
+                string newEmail;
+                cin >> newEmail;
+                user.setEmail(newEmail);
             }
             else if (choice == "address")
             {
                 cout << "Enter new address: ";
-                getline(cin, address);
+                string newAddress;
+                cin.ignore();
+                getline(cin, newAddress);
+                user.setAddress(newAddress);
             }
             else
             {
@@ -538,10 +543,8 @@ public:
             }
         }
 
-        this->users[userIdx].setAddress(address);
-        this->users[userIdx].setAge(age);
-        this->users[userIdx].setEmail(email);
-        this->users[userIdx].setName(name);
+        // Update the user in the users array
+        this->users[userIdx] = user;
 
         cout << "User updated!" << endl;
 
@@ -651,12 +654,9 @@ public:
         while (true)
         {
 
-            // Flush out the input buffer
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
             string choice;
 
-            cout << "What would you like to update? (title, author, pricePerBook) (exit to finish inputting data)";
+            cout << "What would you like to update? (title, author, pricePerBook) (exit to finish inputting data) ";
 
             cin >> choice;
 
@@ -667,18 +667,22 @@ public:
             else if (choice == "title")
             {
                 cout << "Enter new title: ";
-                cin >> title;
+                cin.ignore();
                 getline(cin, title);
+                book.setTitle(title);
             }
             else if (choice == "author")
             {
                 cout << "Enter new author: ";
+                cin.ignore();
                 getline(cin, author);
+                book.setAuthor(author);
             }
             else if (choice == "pricePerBook")
             {
                 cout << "Enter new price per book: ";
                 cin >> pricePerBook;
+                book.setPricePerBook(pricePerBook);
             }
             else
             {
@@ -686,9 +690,13 @@ public:
             }
         }
 
-        book.setTitle(title);
-        book.setAuthor(author);
-        book.setPricePerBook(pricePerBook);
+
+        // Update the user in the users array
+        this->books[bookIdx] = book;
+
+        cout << "Book updated!" << endl;
+
+        this->books[bookIdx].displayDetailed();
     }
 
     // Get sale (by id)
@@ -946,7 +954,6 @@ public:
                 cout << "Thank you for your visit!\n";
                 exit(0);
             }
-
         }
     }
 };
